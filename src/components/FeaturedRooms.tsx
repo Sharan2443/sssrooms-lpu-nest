@@ -1,77 +1,47 @@
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import RoomCard from "./RoomCard";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
-// Mock data - in real app this would come from API
-const mockRooms = [
-  {
-    id: "1",
-    title: "Luxury Single Room with AC",
-    location: "500m from LPU Gate",
-    price: 12000,
-    originalPrice: 15000,
-    rating: 4.8,
-    reviews: 127,
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop",
-    facilities: ["WiFi", "AC", "Meals", "Parking"],
-    discount: 20
-  },
-  {
-    id: "2", 
-    title: "Cozy Shared Room for Girls",
-    location: "Near University Market",
-    price: 8000,
-    rating: 4.6,
-    reviews: 89,
-    image: "https://images.unsplash.com/photo-1611269154421-4e27233ac5c7?w=400&h=250&fit=crop",
-    facilities: ["WiFi", "Meals", "Laundry"],
-  },
-  {
-    id: "3",
-    title: "Premium Studio Apartment", 
-    location: "Walking Distance to LPU",
-    price: 18000,
-    originalPrice: 20000,
-    rating: 4.9,
-    reviews: 156,
-    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=250&fit=crop",
-    facilities: ["WiFi", "Kitchen", "Parking", "Gym"],
-    discount: 10
-  },
-  {
-    id: "4",
-    title: "Boys Hostel - Triple Sharing",
-    location: "LPU Campus Area",
-    price: 6500,
-    rating: 4.4,
-    reviews: 203,
-    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=250&fit=crop",
-    facilities: ["WiFi", "Meals", "Study Room"],
-  },
-  {
-    id: "5",
-    title: "Modern Single Room with Balcony",
-    location: "Phagwara City Center",
-    price: 14000,
-    rating: 4.7,
-    reviews: 91,
-    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=250&fit=crop",
-    facilities: ["WiFi", "AC", "Balcony", "Parking"],
-  },
-  {
-    id: "6",
-    title: "Budget Friendly Double Room",
-    location: "Near LPU Back Gate",
-    price: 9500,
-    originalPrice: 11000,
-    rating: 4.3,
-    reviews: 64,
-    image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&h=250&fit=crop",
-    facilities: ["WiFi", "Meals", "Common Area"],
-    discount: 15
-  }
-];
+interface Room {
+  id: string;
+  title: string;
+  location: string;
+  price: number;
+  original_price?: number;
+  discount?: number;
+  rating: number;
+  total_reviews: number;
+  images: string[];
+  facilities: string[];
+}
 
 const FeaturedRooms = () => {
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchRooms();
+  }, []);
+
+  const fetchRooms = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('rooms')
+        .select('*')
+        .eq('is_available', true)
+        .order('rating', { ascending: false })
+        .limit(6);
+
+      if (error) throw error;
+      setRooms(data || []);
+    } catch (error) {
+      console.error('Error fetching rooms:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -84,11 +54,29 @@ const FeaturedRooms = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockRooms.map((room) => (
-            <RoomCard key={room.id} {...room} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-16">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {rooms.map((room) => (
+              <RoomCard 
+                key={room.id} 
+                id={room.id}
+                title={room.title}
+                location={room.location}
+                price={room.price}
+                originalPrice={room.original_price}
+                discount={room.discount}
+                rating={room.rating}
+                reviews={room.total_reviews}
+                image={room.images[0] || "/placeholder.svg"}
+                facilities={room.facilities}
+              />
+            ))}
+          </div>
+        )}
         
         <div className="text-center mt-12">
           <Button variant="outline" size="lg">
