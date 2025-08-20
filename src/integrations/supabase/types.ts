@@ -14,7 +14,243 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          check_in: string
+          check_out: string | null
+          created_at: string
+          id: string
+          payment_status: string
+          room_id: string
+          special_requests: string | null
+          status: string
+          student_id: string
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          check_in: string
+          check_out?: string | null
+          created_at?: string
+          id?: string
+          payment_status?: string
+          room_id: string
+          special_requests?: string | null
+          status?: string
+          student_id: string
+          total_amount: number
+          updated_at?: string
+        }
+        Update: {
+          check_in?: string
+          check_out?: string | null
+          created_at?: string
+          id?: string
+          payment_status?: string
+          room_id?: string
+          special_requests?: string | null
+          status?: string
+          student_id?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          course: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          is_admin: boolean | null
+          phone: string | null
+          university_id: string | null
+          updated_at: string
+          user_id: string
+          year_of_study: number | null
+        }
+        Insert: {
+          course?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          is_admin?: boolean | null
+          phone?: string | null
+          university_id?: string | null
+          updated_at?: string
+          user_id: string
+          year_of_study?: number | null
+        }
+        Update: {
+          course?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          is_admin?: boolean | null
+          phone?: string | null
+          university_id?: string | null
+          updated_at?: string
+          user_id?: string
+          year_of_study?: number | null
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          booking_id: string | null
+          comment: string | null
+          created_at: string
+          id: string
+          rating: number
+          room_id: string
+          student_id: string
+        }
+        Insert: {
+          booking_id?: string | null
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating: number
+          room_id: string
+          student_id: string
+        }
+        Update: {
+          booking_id?: string | null
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number
+          room_id?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      rooms: {
+        Row: {
+          available_from: string | null
+          available_until: string | null
+          contact_person: string | null
+          contact_phone: string | null
+          created_at: string
+          current_occupancy: number
+          description: string | null
+          discount: number | null
+          facilities: string[] | null
+          gender_preference: string | null
+          id: string
+          images: string[] | null
+          is_available: boolean | null
+          location: string
+          max_occupancy: number
+          original_price: number | null
+          owner_id: string | null
+          price: number
+          rating: number | null
+          room_type: string
+          title: string
+          total_reviews: number | null
+          updated_at: string
+        }
+        Insert: {
+          available_from?: string | null
+          available_until?: string | null
+          contact_person?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          current_occupancy?: number
+          description?: string | null
+          discount?: number | null
+          facilities?: string[] | null
+          gender_preference?: string | null
+          id?: string
+          images?: string[] | null
+          is_available?: boolean | null
+          location: string
+          max_occupancy?: number
+          original_price?: number | null
+          owner_id?: string | null
+          price: number
+          rating?: number | null
+          room_type: string
+          title: string
+          total_reviews?: number | null
+          updated_at?: string
+        }
+        Update: {
+          available_from?: string | null
+          available_until?: string | null
+          contact_person?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          current_occupancy?: number
+          description?: string | null
+          discount?: number | null
+          facilities?: string[] | null
+          gender_preference?: string | null
+          id?: string
+          images?: string[] | null
+          is_available?: boolean | null
+          location?: string
+          max_occupancy?: number
+          original_price?: number | null
+          owner_id?: string | null
+          price?: number
+          rating?: number | null
+          room_type?: string
+          title?: string
+          total_reviews?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rooms_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
