@@ -30,9 +30,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state change:', event, session?.user?.id);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+        
+        // Handle email verification redirect
+        if (event === 'SIGNED_IN' && session?.user) {
+          // If user just signed in via email verification link, redirect to homepage
+          if (window.location.pathname === '/auth' || window.location.hash.includes('access_token')) {
+            window.location.href = '/';
+          }
+        }
       }
     );
 

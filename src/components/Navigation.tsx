@@ -47,6 +47,10 @@ const Navigation = () => {
                   <User className="h-4 w-4 mr-2" />
                   Dashboard
                 </Button>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/admin')}>
+                  <Settings className="h-4 w-4 mr-2" />
+                  Admin
+                </Button>
                 <Button variant="ghost" size="sm" onClick={handleSignOut}>
                   <LogOut className="h-4 w-4 mr-2" />
                   Sign Out
@@ -115,6 +119,17 @@ const Navigation = () => {
                     >
                       <User className="h-4 w-4 mr-2" />
                       Dashboard
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      className="w-full justify-start"
+                      onClick={() => {
+                        navigate('/admin');
+                        setIsOpen(false);
+                      }}
+                    >
+                      <Settings className="h-4 w-4 mr-2" />
+                      Admin
                     </Button>
                     <Button 
                       variant="ghost" 

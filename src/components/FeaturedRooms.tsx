@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import RoomCard from "./RoomCard";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Room {
   id: string;
@@ -79,8 +80,8 @@ const FeaturedRooms = () => {
         )}
         
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg">
-            View All Rooms
+          <Button variant="outline" size="lg" asChild>
+            <Link to="/dashboard">View All Rooms</Link>
           </Button>
         </div>
       </div>
