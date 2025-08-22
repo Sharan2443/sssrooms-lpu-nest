@@ -31,12 +31,12 @@ const Navigation = () => {
             <Link to="/" className="text-muted-foreground hover:text-primary transition-colors">
               Rooms
             </Link>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
               About
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+            </Link>
+            <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
               Contact
-            </a>
+            </Link>
           </div>
 
           {/* Auth Buttons */}
@@ -92,18 +92,20 @@ const Navigation = () => {
               >
                 Rooms
               </Link>
-              <a
-                href="#"
+              <Link
+                to="/about"
                 className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
               >
                 About
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/contact"
                 className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
               >
                 Contact
-              </a>
+              </Link>
             </div>
             <div className="pt-4 pb-3 border-t border-border">
               <div className="px-2 space-y-1">
