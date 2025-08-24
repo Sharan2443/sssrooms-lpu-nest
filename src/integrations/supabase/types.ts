@@ -260,6 +260,38 @@ export type Database = {
         Args: { room_uuid: string; user_uuid: string }
         Returns: boolean
       }
+      get_public_room_info: {
+        Args: { room_id?: string }
+        Returns: {
+          available_from: string
+          available_until: string
+          created_at: string
+          current_occupancy: number
+          description: string
+          discount: number
+          facilities: string[]
+          gender_preference: string
+          id: string
+          images: string[]
+          is_available: boolean
+          location: string
+          max_occupancy: number
+          original_price: number
+          price: number
+          rating: number
+          room_type: string
+          title: string
+          total_reviews: number
+          updated_at: string
+        }[]
+      }
+      get_room_contact_info: {
+        Args: { room_id: string }
+        Returns: {
+          contact_person: string
+          contact_phone: string
+        }[]
+      }
       is_admin: {
         Args: { user_uuid: string }
         Returns: boolean
