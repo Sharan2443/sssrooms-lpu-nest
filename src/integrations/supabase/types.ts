@@ -63,6 +63,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "bookings_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms_public"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "bookings_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
@@ -154,6 +161,13 @@ export type Database = {
             columns: ["room_id"]
             isOneToOne: false
             referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms_public"
             referencedColumns: ["id"]
           },
           {
@@ -253,7 +267,92 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      rooms_public: {
+        Row: {
+          available_from: string | null
+          available_until: string | null
+          contact_person: string | null
+          contact_phone: string | null
+          created_at: string | null
+          current_occupancy: number | null
+          description: string | null
+          discount: number | null
+          facilities: string[] | null
+          gender_preference: string | null
+          id: string | null
+          images: string[] | null
+          is_available: boolean | null
+          location: string | null
+          max_occupancy: number | null
+          original_price: number | null
+          owner_id: string | null
+          price: number | null
+          rating: number | null
+          room_type: string | null
+          title: string | null
+          total_reviews: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          available_from?: string | null
+          available_until?: string | null
+          contact_person?: never
+          contact_phone?: never
+          created_at?: string | null
+          current_occupancy?: number | null
+          description?: string | null
+          discount?: number | null
+          facilities?: string[] | null
+          gender_preference?: string | null
+          id?: string | null
+          images?: string[] | null
+          is_available?: boolean | null
+          location?: string | null
+          max_occupancy?: number | null
+          original_price?: number | null
+          owner_id?: string | null
+          price?: number | null
+          rating?: number | null
+          room_type?: string | null
+          title?: string | null
+          total_reviews?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          available_from?: string | null
+          available_until?: string | null
+          contact_person?: never
+          contact_phone?: never
+          created_at?: string | null
+          current_occupancy?: number | null
+          description?: string | null
+          discount?: number | null
+          facilities?: string[] | null
+          gender_preference?: string | null
+          id?: string | null
+          images?: string[] | null
+          is_available?: boolean | null
+          location?: string | null
+          max_occupancy?: number | null
+          original_price?: number | null
+          owner_id?: string | null
+          price?: number | null
+          rating?: number | null
+          room_type?: string | null
+          title?: string | null
+          total_reviews?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rooms_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
     }
     Functions: {
       is_admin: {
