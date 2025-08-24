@@ -50,6 +50,7 @@ const RoomDetail = () => {
   const [room, setRoom] = useState<Room | null>(null);
   const [loading, setLoading] = useState(true);
   const [bookingLoading, setBookingLoading] = useState(false);
+  const [canSeeContact, setCanSeeContact] = useState(false);
 
   useEffect(() => {
     fetchRoom();
@@ -67,6 +68,19 @@ const RoomDetail = () => {
 
       if (error) throw error;
       setRoom(data);
+
+      // Check if user can see contact information
+      if (user) {
+        const { data: canSeeContactData, error: contactError } = await supabase
+          .rpc('can_see_contact_info', {
+            room_uuid: id,
+            user_uuid: user.id
+          });
+
+        if (!contactError) {
+          setCanSeeContact(canSeeContactData);
+        }
+      }
     } catch (error) {
       console.error('Error fetching room:', error);
       toast({
@@ -281,7 +295,8 @@ const RoomDetail = () => {
                   )}
                 </Button>
 
-                {room.contact_person && (
+                {/* Contact information - only show if user has permission */}
+                {canSeeContact && room.contact_person && (
                   <>
                     <Separator />
                     <div className="space-y-2">
@@ -301,6 +316,19 @@ const RoomDetail = () => {
                           </Button>
                         </div>
                       )}
+                    </div>
+                  </>
+                )}
+                
+                {/* Show message for users who can't see contact info but are authenticated */}
+                {user && !canSeeContact && (
+                  <>
+                    <Separator />
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-muted-foreground">Contact Information</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Contact details will be available after you make a booking request.
+                      </p>
                     </div>
                   </>
                 )}
