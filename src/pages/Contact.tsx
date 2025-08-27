@@ -68,8 +68,7 @@ const Contact = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" name="email" type="email" required />
+                  {/* Email field removed */}
                 </div>
                 
                 <div>
@@ -113,20 +112,14 @@ const Contact = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-start gap-3">
-                  <Mail className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <div className="font-medium">Email</div>
-                    <div className="text-muted-foreground">support@sssrooms.com</div>
-                    <div className="text-muted-foreground">info@sssrooms.com</div>
-                  </div>
+                  {/* Email contact info removed */}
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <Phone className="h-5 w-5 text-primary mt-1" />
                   <div>
                     <div className="font-medium">Phone</div>
-                    <div className="text-muted-foreground">+91 98765 43210</div>
-                    <div className="text-muted-foreground">+91 87654 32109</div>
+                    <div className="text-muted-foreground">+917905173476</div>
                   </div>
                 </div>
                 
@@ -169,7 +162,7 @@ const Contact = () => {
                   <Phone className="h-5 w-5 text-red-600" />
                   <div>
                     <div className="font-medium text-red-700 dark:text-red-400">24/7 Emergency Hotline</div>
-                    <div className="text-red-600 dark:text-red-500">+91 99999 88888</div>
+                    <div className="text-red-600 dark:text-red-500">+917905173476</div>
                   </div>
                 </div>
               </CardContent>
